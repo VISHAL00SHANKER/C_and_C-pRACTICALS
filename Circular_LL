@@ -7,7 +7,7 @@ class Cnode
   int ele=0, size=0, num=0;
 
   public :
-  Cnode* Create()
+  Cnode* Create() // Creating CLL
   {
     Cnode *back=NULL;
     cout<<"\nNumber of nodes in CLL : ";
@@ -34,7 +34,7 @@ class Cnode
     return cursor;
   }
 
-  void Insert_F()
+  void Insert_F() //insert at the front in CLL
   {
     Cnode *one=new Cnode();
     cout<<"\n\t#Insert at the Front of CLL#\nEnter value : ";
@@ -45,7 +45,7 @@ class Cnode
     cursor->next=one;
   }
 
-  void Insert_At()
+  void Insert_At() //insert at any position in CLL
   {
     Cnode *temp=cursor;
     Cnode *one=new Cnode();
@@ -62,7 +62,7 @@ class Cnode
     temp->next=one;
   }
 
-  void Insert_L()
+  void Insert_L() //insert at the end in CLL
   {
     Cnode *temp=cursor;
     Cnode *one=new Cnode();
@@ -150,7 +150,7 @@ class Cnode
     cout<<"Element "<<num<<" not found in the list"<<endl;  
   }
 
-  void Concate(Cnode *A, Cnode *B)
+  void Concate(Cnode *A, Cnode *B) // Concatinate two CLL
   {
     Cnode *temp=A, *temp2=B;
     while(A->next!=temp)
