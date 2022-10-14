@@ -82,7 +82,7 @@ class Cnode
     if(cursor==NULL)
       cout<<"\n--Underflow--\n";
     
-    if(a==1 | a==10)
+    if(a==1 | a==10) //delete first or any node
     {
       size=a;
       if(a==10)
@@ -95,7 +95,7 @@ class Cnode
       Rem=temp->next;
       temp->next=temp->next->next;
     }
-    if(a==0)
+    if(a==0) // delete last node
     {
       do
       {
