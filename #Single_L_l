@@ -1,142 +1,130 @@
 #include<iostream>
 using namespace std;
-
 class Node
 {
-  public :
-  Node* next;
-  int value;
+  Node*next, *head;
+  int value, size, num;
+public:
 
-Node* Insertion_Beg(int size)
-{
-  Node *head=NULL;
-  
-  cout<<"\nEnter Values : \n";
-  for(int i=0; i<size; i++)
+Node* Create()
   {
-    Node* one = new Node();
-    int num=0;
-    cout<<i+1<<" : ";
-    cin>>num;
-    one->value=num;
-    if(head==NULL)
+    head=NULL;
+    Node *temp;
+    
+    cout<<"\nNumber of nodes in CLL : ";
+    cin>>size;
+    
+    for(int i=0; i<size; i++)
+    {
+      Node *one = new Node;
+      cout<<"\nEnter value "<<i+1<<" : ";
+      cin>>num;
+      one->value=num;
+      
+      if(head==NULL)
+      {
+        head=one;
+        temp=head;
+      }
+      else
+      {
+        temp->next=one;
+        temp=temp->next;
+      }
+    }
+    return head;
+  }
+void Insertion_Beg()
+{
+  cout<<"\nEnter Value : \n";
+  cin>>num;
+  
+  Node* one = new Node();  
+  one->value=num;
+  
+  if(head==NULL)
     {
       head=one;
       one->next=NULL;
     }
-    if(i>0)
+    else
     {
       one->next=head;
       head=one;
     }
-  }
-  return head;
 }
 
-Node* Insertion_last(int size)
+void Insertion_At()
 {
-  Node *head=NULL, *temp;
+  Node *temp=head;
 
+  cout<<"\nEnter new Node position : \n";
+  cin>>size;
   cout<<"\nEnter Values : \n";
-  for(int i=0; i<size; i++)
+  Node* one = new Node();
+  cin>>num;
+  
+  for(int i=1; i<size; i++)
+    temp=temp->next;
+    
+  if(head==NULL)
   {
-    Node* one = new Node();
-    int num=0;
-    cout<<i+1<<" : ";
-    cin>>num;
-    one->value=num;
-
-    if(head==NULL)
-    {
-      head=one;
-      temp=head;
-      one->next=NULL;
-    }
-    if(i>0)
-    {
-      temp->next=one;
-      temp=temp->next;
-      temp->next=NULL;
-    }
+    head=one;
+    temp=head;
+    one->next=NULL;
   }
-  return head;
+  else
+  {
+    one->next=temp->next;
+    temp->next=one;
+  }
 }
 
-void Display(Node* a)
+void Display()
 {
+  Node *a=head;
   cout<<"Output : \n";
   while(a!=NULL)
   {
     cout<<a->value<<endl;
     a=a->next;
   }
-
 }
 
-void Sort(Node* a)
+void Search()
 {
-  Node *f=a, *s;
-  int value;
-
-  if(f==NULL)
-  {
-    cout<<"#Single link list is empty#\n";
-    return ;
-  }
-
-  while(f!=NULL)
-  {
-    for(s=f->next; s!=NULL; s=s->next)
-      if(s->value < f->value)
-      {
-        value=s->value;
-        s->value=f->value;
-        f->value=value;
-      }
-    f=f->next;
-  }
-  cout<<"Single link list after sorting\n";
-  Display(a);
-  
-}
-
-void Search(Node* a)
-{
-  int Search, pos = 0;
+  int pos = 0;
   bool flag = false;
-  Node *s;
+  Node *temp=head;
   
-  if(a == NULL)
+  if(temp == NULL)
   {
-    cout<<"List is empty--UNDERFLOW--"<<endl;
+    cout<<"--List is empty--"<<endl;
     return;
   }
   
   cout<<"Enter the value to be searched : ";
-  cin>>Search;
-  
-  s = a;
-  while (s != NULL)
+  cin>>num;
+  while (temp != NULL)
   {
     pos++;
-    if (s->value == Search)
+    if (temp->value == num)
     {
       flag = true;
-      cout<<"Element "<<Search<<" is found at position : "<<pos<<endl;
+      cout<<"Element "<<temp->value<<" is found at position : "<<pos<<endl;
     }
-    s = s->next;
+    temp = temp->next;
   }
+  
   if (!flag)
-    cout<<"Element "<<value<<" not found in the list"<<endl;  
+    cout<<"Element "<<num<<" not found in the list"<<endl;  
 }
 
-
-void Delete_Pos(Node *a, int size)
+void Delete_Pos()
 {
-  int pos = 0;
-  Node *s=a, *temp=a;
+  Node *temp=head, *d=head;
   
-  if(a==NULL)
+  if(temp==NULL)
   {
     cout<<"\n--*UNDERFLOW**--\n";
     return ;
@@ -144,53 +132,30 @@ void Delete_Pos(Node *a, int size)
   else
   {
     cout<<"Enter the Position of the value : ";
-    cin>>pos;
+    cin>>size;
   }
   
   
-  if(pos==1)
-    a=s->next;
+  if(size==1)
+    head=d->next;
   else
   {
-   for(int i=1; i<pos; i++)
+   for(int i=1; i<size; i++)
     {
-      temp=s;
-      s=s->next;
+      temp=d;
+      d=d->next;
     }
-    temp->next=s->next;
-    free(s);
+    
+    temp->next=d->next;
+    free(d);
     cout<<"\nElement deleted successfully!\n";
-    Display(a);
+    Display();
   }
 }
 
-Node* Update(Node *a, int size)
+void Concatenate(Node *a,Node *b)
 {
-  int num, pos, i;
-  Node *s=a, *temp;
-     
-  cout<<"Enter the node postion to be updated: ";
-  cin>>pos;
-  cout<<"Enter the new value: ";
-  cin>>num;
-  
-  if (pos == 1)
-    a->value = num; 
-  else
-  {
-    for (i = 1; i<pos; i++)
-      s = s->next;
-
-    s->value = num;  
-    Display(a);
-  }
-  cout<<"Node Updated"<<endl;
-  return a;
-}
-
-Node* Concatenate(Node *a,Node *b)
-{
-  Node* temp=a;
+  head=a;
   if(a==NULL | b==NULL )
     cout<<"\n--EMPTY LIST\n";
   
@@ -198,7 +163,6 @@ Node* Concatenate(Node *a,Node *b)
     a=a->next;  
 
   a->next=b;
-  return temp;
 }
 
 
@@ -210,45 +174,32 @@ int main()
   int siz=0, choice=0;
   Node obj;
   char c='y';
+
+  head=obj.Create();
   
-  cout<<"Number of Elements in #LL# : ";
-  cin>>siz;
   while(c=='y' | c=='Y')
   {
-    cout<<"1] Insertion in the Beginning\n2] Insertion in the End\n";
-    cout<<"\t--**FUNCTIONALITY**--\n3] Sort\n4] Search\n5] Delete_Position\n6] Update\n7] Concatenate\n8] Display\nChoose any one option : ";
+    cout<<"\t--**FUNCTIONALITY**--\n1] Insertion in the Beginning\n2] Insertion in the End\n3] Search\n4] Delete_Position\n5] Concatenate\n6] Display\nChoose any one option : ";
     cin>>choice;
 
     switch(choice)
     {
-      case 1: head=obj.Insertion_Beg(siz);break;
       
-      case 2: head=obj.Insertion_last(siz);break;
+      case 1: obj.Insertion_Beg();break;
       
-      case 3: obj.Sort(head);break;
+      case 2: obj.Insertion_At();break;
       
-      case 4: obj.Search(head);break;
+      case 3: obj.Search();break;
 
-      case 5: obj.Delete_Pos(head, siz);break;
+      case 4: obj.Delete_Pos();break;
 
-      case 6: head=obj.Update(head, siz);break;
-
-      case 7: cout<<"\nEnter link_List_2 values\nNUmber of Elements in #LL2# : ";
-              cin>>siz;
-              cout<<"1] Insertion in the Beginning\n2] Insertion in the End\nchoose any one : ";
-              cin>>choice;
-              switch(choice)
-              {
-                case 1: head2=obj.Insertion_Beg(siz);break;
+      case 5: head2=obj.Create();
+              obj.Concatenate(head, head2);break;
       
-                case 2: head2=obj.Insertion_last(siz);break;
-              }
-              head=obj.Concatenate(head, head2);break;
-      
-      case 8: obj.Display(head);break;
+      case 6: obj.Display();break;
     }
     cout<<"Continue(Y/N) : ";
     cin>>c;
   }
   return 0;
-}
+} 
