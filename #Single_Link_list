@@ -11,7 +11,7 @@ Node* Create()
     head=NULL;
     Node *temp;
     
-    cout<<"\nNumber of nodes in CLL : ";
+    cout<<"\nNumber of nodes in SLL : ";
     cin>>size;
     
     for(int i=0; i<size; i++)
@@ -32,13 +32,13 @@ Node* Create()
         temp=temp->next;
       }
     }
+    Display();
     return head;
   }
 void Insertion_Beg()
 {
-  cout<<"\nEnter Value : \n";
+  cout<<"\nEnter Value : ";
   cin>>num;
-  
   Node* one = new Node();  
   one->value=num;
   
@@ -52,43 +52,46 @@ void Insertion_Beg()
       one->next=head;
       head=one;
     }
+    Display();
 }
 
 void Insertion_At()
 {
   Node *temp=head;
-
-  cout<<"\nEnter new Node position : \n";
-  cin>>size;
-  cout<<"\nEnter Values : \n";
   Node* one = new Node();
+
+  cout<<"\nEnter new Node position() : ";
+  cin>>size;
+  cout<<"\nEnter Values : ";
   cin>>num;
-  
-  for(int i=1; i<size; i++)
-    temp=temp->next;
+  one->value=num;
     
-  if(head==NULL)
+  if(size==1)
   {
+    one->next=head;
     head=one;
-    temp=head;
-    one->next=NULL;
   }
   else
   {
+    for(int i=0; i<size-2; i++)
+        temp=temp->next;
+        
     one->next=temp->next;
     temp->next=one;
   }
+  Display();
 }
 
 void Display()
 {
   Node *a=head;
-  cout<<"Output : \n";
+  cout<<"\nOutput : ";
   while(a!=NULL)
   {
-    cout<<a->value<<endl;
+    cout<<a->value<<"\t";
     a=a->next;
   }
+  cout<<endl<<endl;
 }
 
 void Search()
@@ -122,7 +125,7 @@ void Search()
 
 void Delete_Pos()
 {
-  Node *temp=head, *d=head;
+  Node *temp=head, *d;
   
   if(temp==NULL)
   {
@@ -135,22 +138,22 @@ void Delete_Pos()
     cin>>size;
   }
   
-  
   if(size==1)
-    head=d->next;
+  {
+    d=head;
+    head=head->next;
+  }
   else
   {
-   for(int i=1; i<size; i++)
-    {
-      temp=d;
-      d=d->next;
-    }
-    
+   for(int i=0; i<size-2; i++)
+        temp=temp->next;
+        
+    d=temp->next;
     temp->next=d->next;
+  }
     free(d);
     cout<<"\nElement deleted successfully!\n";
     Display();
-  }
 }
 
 void Concatenate(Node *a,Node *b)
@@ -163,8 +166,8 @@ void Concatenate(Node *a,Node *b)
     a=a->next;  
 
   a->next=b;
+  Display();
 }
-
 
 };
 
@@ -179,7 +182,7 @@ int main()
   
   while(c=='y' | c=='Y')
   {
-    cout<<"\t--**FUNCTIONALITY**--\n1] Insertion in the Beginning\n2] Insertion in the End\n3] Search\n4] Delete_Position\n5] Concatenate\n6] Display\nChoose any one option : ";
+    cout<<"\t--**FUNCTIONALITY**--\n1] Insertion in the Beginning\n2] Insertion At\n3] Search\n4] Delete_Position\n5] Concatenate\nChoose any one option : ";
     cin>>choice;
 
     switch(choice)
@@ -196,10 +199,9 @@ int main()
       case 5: head2=obj.Create();
               obj.Concatenate(head, head2);break;
       
-      case 6: obj.Display();break;
     }
     cout<<"Continue(Y/N) : ";
     cin>>c;
   }
   return 0;
-} 
+}
